@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f9fc">
+<title>Why the Mean Minimizes Squared Deviations</title>
+<style>
+:root{--bg:#f6f8fc;--ink:#17243a;--muted:#52617b;--line:#dce4f0;--blue:#325dca;--teal:#067c74;--orange:#cc6b30;--white:#fff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}main{max-width:1130px;margin:auto;padding:30px 28px 45px}header{display:flex;justify-content:space-between;gap:16px;align-items:start}h1{font-size:clamp(1.55rem,3vw,2.4rem);letter-spacing:-.04em;line-height:1.15;margin:4px 0 6px}p{margin:0 0 12px}.eyebrow{color:var(--blue);font-weight:750;font-size:.77rem;letter-spacing:.12em;text-transform:uppercase}.muted{color:var(--muted)}.panel{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 4px 18px #1b37600b}.layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(275px,1fr);gap:16px;margin-top:20px}.chartarea{min-width:0}.heading{font-weight:750;font-size:1.12rem;margin-bottom:10px}.axislabel{font-size:12px;fill:#52617b}.chart{display:block;width:100%;height:auto}.controls{display:flex;flex-direction:column;gap:14px}.readout{font-size:2.3rem;font-weight:800;line-height:1.05;font-variant-numeric:tabular-nums}.readout.small{font-size:1.9rem}input[type=range]{width:100%;accent-color:var(--blue);cursor:pointer}input[type=number]{width:58px;padding:5px;border:1px solid #bfcce1;border-radius:7px;font:inherit;text-align:center;color:var(--ink)}button{background:#edf2fc;color:#234aaa;border:1px solid #cad8f4;border-radius:9px;padding:9px 12px;font-weight:700;cursor:pointer;font-size:.9rem}button:hover{background:#e0eafa}button:focus-visible,input:focus-visible{outline:3px solid #8ca8f9;outline-offset:2px}.buttons{display:flex;flex-wrap:wrap;gap:8px}.legend{display:flex;align-items:center;gap:16px;font-size:.85rem;color:var(--muted);flex-wrap:wrap}.dot{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px}.metric{border-top:1px solid var(--line);padding-top:12px}.metric label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:5px}.values{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}.values input{width:63px}.formula{font-size:clamp(.99rem,1.5vw,1.16rem);background:#edf7f6;border:1px solid #c7e5e1;padding:12px;border-radius:11px;margin-top:12px;font-weight:650;color:#116159}.tip{font-size:.88rem;color:var(--muted)}.badge{background:#e9f5f0;color:#0b7068;border-radius:100px;font-size:.78rem;font-weight:700;padding:7px 12px;white-space:nowrap}.footer{margin-top:16px;color:var(--muted);font-size:.9rem}.hint{background:#fff4e9;border:1px solid #f1dfc5;color:#784414;padding:11px;border-radius:9px;font-size:.9rem}@media(max-width:800px){main{padding:18px 12px 30px}.layout{grid-template-columns:1fr}.panel{padding:16px}header{flex-direction:column}.badge{align-self:flex-start}}@media(min-width:1450px){main{max-width:1390px}body{font-size:19px}.panel{padding:29px}.layout{grid-template-columns:1.7fr 1fr}.chart{max-height:450px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main>
+<header><div><div class="eyebrow">Statistics in Psychology · Interactive demonstration</div><h1>Why does the arithmetic mean minimize squared deviations?</h1><p class="muted">Move the reference value and observe what happens to the total squared error.</p></div><span class="badge">Live classroom demo</span></header>
+<div class="layout">
+<section class="panel chartarea" aria-label="Plot of sum of squared deviations"><div class="heading">Sum of squared deviations vs. reference value</div><svg id="plot" class="chart" viewBox="0 0 700 410" role="img" aria-label="A convex curve of the sum of squared deviations with its minimum at the mean"></svg><div class="legend"><span><i class="dot" style="background:#325dca"></i>Squared-deviation curve</span><span><i class="dot" style="background:#cc6b30"></i>Current reference</span><span><i class="dot" style="background:#067c74"></i>Minimum at the mean</span></div><div class="formula" id="statement" aria-live="polite"></div></section>
+<aside class="panel controls"><div><div class="heading">Try it yourself</div><label for="reference">Reference value, <i>c</i></label><div class="readout" id="currentC">5.0</div><input id="reference" type="range" min="0" max="12" step="0.1" value="5" aria-label="Adjust reference value"></div><div class="buttons"><button id="setMean">Set c to the mean</button><button id="reset">Reset data</button><button id="fullscreen">Full screen</button></div><div class="metric"><label>Sample mean</label><div class="readout small" id="mean">5.00</div></div><div class="metric"><label>Sum of squared deviations, Σ(xᵢ − c)²</label><div class="readout small" id="ssd">26.00</div></div><div class="metric"><label>Minimum possible sum of squares</label><div class="readout small" style="color:var(--teal)" id="minssd">26.00</div></div><div class="metric"><label>Five participants’ stress scores (0–10 scale)</label><div class="values" id="scores"></div><p class="tip">Edit any score from 0 to 10 to explore different datasets.</p></div><div class="hint">Discussion question: Why do we square the deviations rather than simply add them?</div></aside>
+</div><p class="footer">Key mathematical property: For any reference value <i>c</i>, Σ(xᵢ − x̄)² ≤ Σ(xᵢ − c)². Equality holds when c = x̄.</p>
+</main>
+<script>
+(()=>{'use strict';
+const original=[2,4,4,6,9];let values=[...original], c=5;
+const $=id=>document.getElementById(id), ref=$('reference');
+const avg=()=>values.reduce((a,b)=>a+b,0)/values.length;
+const ssd=x=>values.reduce((a,b)=>a+(b-x)**2,0);
+const format=x=>x.toFixed(2);
+const svgNS='http://www.w3.org/2000/svg';
+function elem(name,attrs={},content){let el=document.createElementNS(svgNS,name);for(let [k,v] of Object.entries(attrs))el.setAttribute(k,String(v));if(content!==undefined)el.textContent=content;return el}
+function draw(){const svg=$('plot');svg.replaceChildren();const m=avg(), ymax=Math.max(8,ssd(0),ssd(12))*1.08;const W=700,H=410,L=66,R=24,T=25,B=54,pw=W-L-R,ph=H-T-B;const X=v=>L+pw*v/12,Y=v=>T+ph*(1-v/ymax);
+for(let k=0;k<=4;k++){let y=ymax*k/4;svg.append(elem('line',{x1:L,y1:Y(y),x2:W-R,y2:Y(y),stroke:'#e1e7ef','stroke-width':1}));svg.append(elem('text',{x:L-12,y:Y(y)+5,'text-anchor':'end',class:'axislabel'},Math.round(y).toString()))}
+for(let x=0;x<=12;x+=2){svg.append(elem('text',{x:X(x),y:H-26,'text-anchor':'middle',class:'axislabel'},String(x)))}
+svg.append(elem('line',{x1:L,y1:H-B,x2:W-R,y2:H-B,stroke:'#738199','stroke-width':1.6}));svg.append(elem('text',{x:(L+W-R)/2,y:H-3,'text-anchor':'middle',class:'axislabel'},'Reference value (c)'));
+svg.append(elem('text',{transform:'translate(16 210) rotate(-90)','text-anchor':'middle',class:'axislabel'},'Sum of squared deviations'));
+let path='';for(let i=0;i<=240;i++){let x=i/20;path+=(i?'L':'M')+X(x).toFixed(2)+','+Y(ssd(x)).toFixed(2)+' '};svg.append(elem('path',{d:path,fill:'none',stroke:'#325dca','stroke-width':4,'stroke-linejoin':'round'}));
+svg.append(elem('line',{x1:X(m),y1:T,x2:X(m),y2:H-B,stroke:'#067c74','stroke-dasharray':'6 6','stroke-width':2}));
+svg.append(elem('line',{x1:X(c),y1:Y(ssd(c)),x2:X(c),y2:H-B,stroke:'#cc6b30','stroke-dasharray':'4 5','stroke-width':2}));
+svg.append(elem('circle',{cx:X(m),cy:Y(ssd(m)),r:7,fill:'#067c74',stroke:'white','stroke-width':2}));
+svg.append(elem('circle',{cx:X(c),cy:Y(ssd(c)),r:8,fill:'#cc6b30',stroke:'white','stroke-width':2}));
+let tooltipX=Math.min(W-110,Math.max(L+15,X(c)+12));svg.append(elem('text',{x:tooltipX,y:Math.max(23,Y(ssd(c))-12),'font-size':16,'font-weight':700,fill:'#ad5020'},format(ssd(c))));
+$('currentC').textContent=c.toFixed(1);$('mean').textContent=format(m);$('ssd').textContent=format(ssd(c));$('minssd').textContent=format(ssd(m));$('statement').textContent=`Mean = ${format(m)}  ·  Current squared error = ${format(ssd(c))}  ·  Minimum = ${format(ssd(m))}`;
+}
+function renderScores(){const container=$('scores');container.replaceChildren();values.forEach((v,i)=>{let label=document.createElement('label');label.className='muted';label.textContent=`P${i+1} `;let input=document.createElement('input');input.type='number';input.min='0';input.max='10';input.step='1';input.value=v;input.setAttribute('aria-label',`Participant ${i+1} stress score`);input.addEventListener('change',()=>{const next=Number(input.value);if(!Number.isFinite(next)){input.value=values[i];return}values[i]=Math.max(0,Math.min(10,Math.round(next)));input.value=values[i];draw()});label.append(input);container.append(label)})}
+ref.addEventListener('input',()=>{c=Number(ref.value);draw()});$('setMean').addEventListener('click',()=>{c=Math.round(avg()*10)/10;ref.value=c;draw()});$('reset').addEventListener('click',()=>{values=[...original];c=5;ref.value=5;renderScores();draw()});$('fullscreen').addEventListener('click',()=>{if(!document.fullscreenElement){document.documentElement.requestFullscreen?.()}else{document.exitFullscreen?.()}});renderScores();draw();
+})();
+</script>
+</body>
+</html>
